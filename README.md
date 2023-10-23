@@ -19,8 +19,11 @@ Open your terminal and run the following commands
 # Go to project directory
 cd /path/to/project
 
+# Add this git repo to composer.json
+composer config repositories.craft-cache-helper git https://github.com/serieseight/craft-cache-helper.git
+
 # Tell Composer to load the plugin
-composer require serieseight/craft-cache-helper
+composer require serieseight/craft-cache-helper:dev-main@dev
 
 # Tell Craft to install the plugin
 ./craft plugin/install _cache-helper
