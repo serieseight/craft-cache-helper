@@ -4,7 +4,7 @@ This plugin injects HTML and JS into any Formie forms to help with cached fields
 
 ## Requirements
 
-This plugin requires Craft CMS 4.5.0 or later, and PHP 8.0.2 or later.
+This plugin requires Craft CMS 3.1.0 or later, and PHP 7.1.0 or later.
 
 ## Usage
 
@@ -23,7 +23,7 @@ cd /path/to/project
 composer config repositories.craft-cache-helper git https://github.com/serieseight/craft-cache-helper.git
 
 # Tell Composer to load the plugin
-composer require serieseight/craft-cache-helper:dev-main@dev
+composer require serieseight/craft-cache-helper:v3.x-dev@dev
 
 # Tell Craft to install the plugin
 ./craft plugin/install _cache-helper
