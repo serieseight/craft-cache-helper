@@ -5,7 +5,6 @@ namespace serieseight\cachehelper;
 use Craft;
 use craft\base\Plugin;
 use serieseight\cachehelper\assetbundles\CacheHelperBundle;
-use serieseight\cachehelper\models\Settings;
 
 /**
  * Cache Helper plugin
@@ -28,7 +27,7 @@ class CacheHelper extends Plugin
     private function attachEventHandlers(): void
     {
         // Check Formie plugin is installed
-        if(Craft::$app->plugins->getPlugin('formie')) {
+        if(Craft::$app->plugins->isPluginEnabled('formie')) {
             Craft::$app->getView()->hook('formie.form.end', function(array &$context) {
                 // Register asset bundle into view
                 // See assetbundles/CacheHelperBundle to see what this loads (JS/CSS)
