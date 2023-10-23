@@ -23,13 +23,10 @@ class CacheHelper extends Plugin
     private function attachEventHandlers(): void
     {
         // Check Formie plugin is installed
-        if(Craft::$app->plugins->isPluginEnabled('formie')) {
-            Craft::$app->getView()->hook('formie.form.end', function(array &$context) {
-                // Register asset bundle into view
-                // See assetbundles/CacheHelperBundle to see what this loads (JS/CSS)
-                // At time of writing it only injects resources/cache-helper.js
-                $context['view']->registerAssetBundle(CacheHelperBundle::class);
+        if(Craft::$app->plugins->isPluginEnabled('formie') && Craft::$app->request->getIsSiteRequest()) {
+            Craft::$app->view->registerAssetBundle(CacheHelperBundle::class);
 
+            Craft::$app->getView()->hook('formie.form.end', function(array &$context) {
                 return $context['view']->renderTemplate('_cache-helper/_caching.twig', [
                     'form' => $context['form'],
                 ]);
