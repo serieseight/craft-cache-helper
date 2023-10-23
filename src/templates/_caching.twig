@@ -10,7 +10,7 @@ rather than relying on twig (which would be cached)
 	window.dynamicForms.push({
 		parent: document.currentScript.parentElement,
 		fields: [
-      {%- for field in form.getCustomFields() -%}
+			{%- for field in form.getFormFieldLayout().getFields() -%}
 				{%- if field['defaultOption'] is defined -%}
 				{
 					handle: '{{ field.handle }}',
@@ -24,7 +24,7 @@ rather than relying on twig (which would be cached)
 					{%- endswitch -%}
 				},
 				{%- endif -%}
-      {%- endfor -%}
+			{%- endfor -%}
 		]
 	})
 </script>

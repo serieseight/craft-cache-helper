@@ -11,7 +11,7 @@ function init() {
 }
 
 function updateTokens(form) {
-	const formConfigRaw = form.getAttribute('data-fui-form');
+	const formConfigRaw = form.getAttribute('data-config');
 	if (!formConfigRaw) return;
 	const formConfig = JSON.parse(formConfigRaw);
 	if (!formConfig || !formConfig.formHandle) return;
