@@ -15,7 +15,7 @@ use craft\helpers\Template;
  */
 class CacheHelper extends Plugin
 {
-    public string $schemaVersion = '1.0.1';
+    public string $schemaVersion = '1.0.0';
 
     public function init(): void
     {
