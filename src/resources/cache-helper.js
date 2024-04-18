@@ -15,13 +15,11 @@ function updateTokens(form) {
 	if (!formConfigRaw) return;
 	const formConfig = JSON.parse(formConfigRaw);
 	if (!formConfig || !formConfig.formHandle) return;
-	// update tokens
-	fetch(`/actions/formie/forms/refresh-tokens?form=${formConfig.formHandle}`)
-		.then(result => result.json())
-		.then(result => {
-			updateCSRF(form, result);
-			updateCaptcha(form, result);
-		});
+	// update tokens using built-in Formie function
+	document.addEventListener('onFormieInit', (e) => {
+		let Formie = e.detail.formie;
+		Formie.refreshForCache(formConfig.formHashId)
+	})
 	if (formConfig.settings.submitMethod === 'page-reload') {
 		// before submission add a query parameter to break the cache of the success message
 		form.addEventListener('onFormieValidate', e => {
