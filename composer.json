@@ -1,6 +1,16 @@
 {
     "name": "serieseight/craft-cache-helper",
     "type": "craft-plugin",
+    "license": "proprietary",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "cache",
+        "cache helper"
+    ],
     "require": {
         "php": ">=8.0.2",
         "craftcms/cms": "^4.5.0"
@@ -11,13 +21,19 @@
             "homepage": "https://serieseight.com"
         }
     ],
+    "support": {
+        "email": "plugins@serieseight.com",
+        "issues": "https://github.com/serieseight/craft-cache-helper/issues?state=open",
+        "source": "https://github.com/serieseight/craft-cache-helper",
+        "docs": "https://github.com/serieseight/craft-cache-helper/blob/master/README.md"
+    },
     "autoload": {
         "psr-4": {
             "serieseight\\cachehelper\\": "src/"
         }
     },
     "extra": {
-        "handle": "_cache-helper",
+        "handle": "cache-helper",
         "name": "Cache Helper",
         "developer": "Series Eight",
         "documentationUrl": "https://github.com/serieseight/craft-cache-helper",
