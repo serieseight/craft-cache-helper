@@ -12,6 +12,8 @@ This plugin will use Formie hooks if you're using `form.render()` (you should be
 
 If you're not using `form.render()` and rendering the form your own way, make sure you have `{% hook 'formie.form.end' %}` at the end of your form.
 
+If you need to reinitialise your forms at any point, you can do so using `window.dynamicFormsInit()`.
+
 ## Installation
 Open your terminal and run the following commands
 
@@ -19,16 +21,9 @@ Open your terminal and run the following commands
 # Go to project directory
 cd /path/to/project
 
-# Add this git repo to composer.json
-composer config repositories.craft-cache-helper git https://github.com/serieseight/craft-cache-helper.git
-
 # Tell Composer to load the plugin
-composer require serieseight/craft-cache-helper:dev-main@dev
+composer require serieseight/craft-cache-helper
 
 # Tell Craft to install the plugin
-./craft plugin/install _cache-helper
+./craft plugin/install cache-helper
 ```
-
-## Extra info
-
-- The plugin handle is `_cache-helper`. The underscore (`_`) means the plugin is private. Private plugins are excluded from license verification (and ineligible for listing on the plugin store)
