@@ -80,9 +80,17 @@ function updateDynamic(form) {
 			case 'cookie':
 				updateField(form.parent, field.handle, getCookie(field.cookieName));
 				break;
+			case 'prePopulate':
 			case 'query':
 				const params = new URLSearchParams(location.search);
-				updateField(form.parent, field.handle, params.get(field.queryParam));
+				if(field.className === 'verbb\formie\fields\formfields\Checkboxes') {
+					updateCheckboxes(form.parent, field.handle, [params.get(`${field.queryParam}`)]);
+					updateCheckboxes(form.parent, field.handle, params.getAll(`${field.queryParam}[]`));
+				} else if(field.className === 'verbb\formie\fields\formfields\Entries') {
+					updateElement(form.parent, field.handle, params.get(field.queryParam));
+				} else {
+					updateField(form.parent, field.handle, params.get(field.queryParam));
+				}
 				break;
 		}
 	}
@@ -92,6 +100,26 @@ function updateField(el, handle, value) {
 	const field = el.querySelector(`[name="fields\[${handle}\]"]`);
 	if (!field) return;
 	field.value = value;
+}
+
+function updateElement(el, handle, value) {
+	const field = el.querySelector(`[name="fields\[${handle}\][]"]`);
+	if (!field) return;
+	field.value = value;
+}
+
+function updateCheckboxes(el, handle, values = []) {
+	if(values.length) {
+		// unselect checkboxes
+		el.querySelectorAll(`[name="fields\[${handle}\][]"]`).forEach(checkbox => checkbox.checked = false);
+
+		// select other checkboxes
+		values.forEach(value => {
+			const checkbox = el.querySelector(`[name="fields\[${handle}\][]"][value="${value}"]`);
+			if(!checkbox) return;
+			checkbox.checked = true;
+		})
+	}
 }
 
 function getCookie(name) {
