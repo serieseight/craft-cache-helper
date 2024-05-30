@@ -66,10 +66,10 @@ function updateDynamic(form) {
       case 'prePopulate':
       case 'query':
         const params = new URLSearchParams(location.search);
-        if(field.className === 'verbb\formie\fields\formfields\Checkboxes') {
+        if(field.className === 'Checkboxes') {
           updateCheckboxes(form.parent, field.handle, [params.get(`${field.queryParam}`)]);
           updateCheckboxes(form.parent, field.handle, params.getAll(`${field.queryParam}[]`));
-        } else if(field.className === 'verbb\formie\fields\formfields\Entries') {
+        } else if(field.className === 'Entries') {
           updateElement(form.parent, field.handle, params.get(field.queryParam));
         } else {
           updateField(form.parent, field.handle, params.get(field.queryParam));

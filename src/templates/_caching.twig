@@ -12,7 +12,7 @@ rather than relying on twig (which would be cached)
 				{%- if field['prePopulate'] is defined -%}
 				{
 					handle: '{{ field.handle }}',
-					className: '{{ field.className }}',
+					className: '{{ field.displayName }}',
 					type: 'prePopulate',
 					queryParam: '{{ field.prePopulate }}',
 				},
@@ -20,7 +20,7 @@ rather than relying on twig (which would be cached)
 				{%- if field['defaultOption'] is defined -%}
 				{
 					handle: '{{ field.handle }}',
-					className: '{{ field.className }}',
+					className: '{{ field.displayName }}',
 					type: '{{ field.defaultOption }}',
 					{%- switch field.defaultOption -%}
 						{%- case 'cookie' -%}
