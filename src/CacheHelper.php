@@ -52,10 +52,10 @@ class CacheHelper extends Plugin
 
         // Render the template with our vars passed in
         try {
-            $htmlText = Craft::$app->view->renderTemplate('_cache-helper/'.$templatePath, $vars);
+            $htmlText = Craft::$app->view->renderTemplate('cache-helper/'.$templatePath, $vars);
         } catch (\Exception $e) {
             $htmlText = 'Error rendering template '.$templatePath.' -> '.$e->getMessage();
-            Craft::error(Craft::t('_cache-helper', $htmlText), __METHOD__);
+            Craft::error(Craft::t('cache-helper', $htmlText), __METHOD__);
         }
 
         // Restore the old template mode
