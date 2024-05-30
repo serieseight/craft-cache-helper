@@ -8,7 +8,7 @@ This plugin requires Craft CMS 4.5.0 or later, and PHP 8.0.2 or later.
 
 ## Usage
 
-This plugin will use Formie hooks if you're using `form.render()` (you should be).
+This plugin will use Formie hooks if you're using `form.render()`.
 
 If you're not using `form.render()` and rendering the form your own way, make sure you have `{% hook 'formie.form.end' %}` at the end of your form.
 
