@@ -9,9 +9,20 @@ rather than relying on twig (which would be cached)
 		parent: document.currentScript.parentElement,
 		fields: [
 			{%- for field in form.getFormFieldLayout().getFields() -%}
+				{%- if field['prePopulate'] is defined -%}
+					{%- if field.prePopulate | length -%}
+					{
+						handle: '{{ field.handle }}',
+						name: '{{ field.displayName }}',
+						type: 'prePopulate',
+						queryParam: '{{ field.prePopulate }}',
+					},
+					{%- endif -%}
+				{%- endif -%}
 				{%- if field['defaultOption'] is defined -%}
 				{
 					handle: '{{ field.handle }}',
+					name: '{{ field.displayName }}',
 					type: '{{ field.defaultOption }}',
 					{%- switch field.defaultOption -%}
 						{%- case 'cookie' -%}

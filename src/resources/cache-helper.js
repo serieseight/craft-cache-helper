@@ -82,9 +82,26 @@ function updateDynamic(form) {
 			case 'cookie':
 				updateField(form.parent, field.handle, getCookie(field.cookieName));
 				break;
+			case 'prePopulate':
 			case 'query':
 				const params = new URLSearchParams(location.search);
-				updateField(form.parent, field.handle, params.get(field.queryParam));
+				switch(field.name) {
+					case 'checkboxes':
+						updateCheckboxes(form.parent, field.handle, [params.get(`${field.queryParam}`)]);
+						updateCheckboxes(form.parent, field.handle, params.getAll(`${field.queryParam}[]`));
+						break;
+
+					case 'Radio Buttons':
+						updateRadio(form.parent, field.handle, params.get(field.queryParam));
+						break;
+
+					case 'Entries':
+						updateElement(form.parent, field.handle, params.get(field.queryParam));
+						break;
+
+					default:
+						updateField(form.parent, field.handle, params.get(field.queryParam));
+				}
 				break;
 		}
 	}
@@ -92,12 +109,42 @@ function updateDynamic(form) {
 
 function updateField(el, handle, value) {
 	const field = el.querySelector(`[name="fields\[${handle}\]"]`);
-	if (!field) return;
+	if(!field) return;
 	field.value = value;
+}
+
+function updateElement(el, handle, value) {
+	const field = el.querySelector(`[name="fields\[${handle}\][]"]`);
+	if(!field) return;
+	field.value = value;
+}
+
+function updateCheckboxes(el, handle, values = []) {
+	if(values.length) {
+		// unselect checkboxes
+		el.querySelectorAll(`[name="fields\[${handle}\][]"]`).forEach(checkbox => checkbox.checked = false);
+
+		// select other checkboxes
+		values.forEach(value => {
+			const checkbox = el.querySelector(`[name="fields\[${handle}\][]"][value="${value}"]`);
+			if(!checkbox) return;
+			checkbox.checked = true;
+		})
+	}
+}
+
+function updateRadio(el, handle, value) {
+	const field = el.querySelector(`[name="fields\[${handle}\]"][value="${value}"]`);
+	if(!field) return;
+	field.checked = true;
 }
 
 function getCookie(name) {
 	const value = `; ${document.cookie}`;
 	const parts = value.split(`; ${name}=`);
 	if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+window.dynamicFormsInit = function() {
+	init();
 }
