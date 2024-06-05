@@ -1,4 +1,4 @@
-# Cache Helper
+# Cache Helper (Craft 3)
 
 This plugin injects HTML and JS into any Formie forms to help with cached fields (e.g. get query param or cookie)
 
@@ -18,9 +18,6 @@ Open your terminal and run the following commands
 ```
 # Go to project directory
 cd /path/to/project
-
-# Add this git repo to composer.json
-composer config repositories.craft-cache-helper git https://github.com/serieseight/craft-cache-helper.git
 
 # Tell Composer to load the plugin
 composer require serieseight/craft-cache-helper:v3.x-dev@dev
