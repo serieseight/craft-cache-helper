@@ -27,7 +27,7 @@ class CacheHelper extends Plugin
             Craft::$app->view->registerAssetBundle(CacheHelperBundle::class);
 
             Craft::$app->getView()->hook('formie.form.end', function(array &$context) {
-                return $context['view']->renderTemplate('_cache-helper/_caching.twig', [
+                return $context['view']->renderTemplate('cache-helper/_caching.twig', [
                     'form' => $context['form'],
                 ]);
             });

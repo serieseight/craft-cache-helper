@@ -20,12 +20,8 @@ Open your terminal and run the following commands
 cd /path/to/project
 
 # Tell Composer to load the plugin
-composer require serieseight/craft-cache-helper:v3.x-dev@dev
+composer require serieseight/craft-cache-helper:v3.x-dev
 
 # Tell Craft to install the plugin
-./craft plugin/install _cache-helper
+./craft plugin/install cache-helper
 ```
-
-## Extra info
-
-- The plugin handle is `_cache-helper`. The underscore (`_`) means the plugin is private. Private plugins are excluded from license verification (and ineligible for listing on the plugin store)

@@ -17,7 +17,7 @@
         }
     },
     "extra": {
-        "handle": "_cache-helper",
+        "handle": "cache-helper",
         "name": "Cache Helper",
         "developer": "Series Eight",
         "documentationUrl": "https://github.com/serieseight/craft-cache-helper",
