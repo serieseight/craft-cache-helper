@@ -10,17 +10,19 @@ rather than relying on twig (which would be cached)
 		fields: [
       {%- for field in form.getCustomFields() -%}
 				{%- if field['prePopulate'] is defined -%}
-				{
-					handle: '{{ field.handle }}',
-					className: '{{ field.displayName }}',
-					type: 'prePopulate',
-					queryParam: '{{ field.prePopulate }}',
-				},
+					{%- if field.prePopulate | length -%}
+						{
+							handle: '{{ field.handle }}',
+							name: '{{ field.displayName }}',
+							type: 'prePopulate',
+							queryParam: '{{ field.prePopulate }}',
+						},
+					{%- endif -%}
 				{%- endif -%}
 				{%- if field['defaultOption'] is defined -%}
 				{
 					handle: '{{ field.handle }}',
-					className: '{{ field.displayName }}',
+					name: '{{ field.displayName }}',
 					type: '{{ field.defaultOption }}',
 					{%- switch field.defaultOption -%}
 						{%- case 'cookie' -%}
