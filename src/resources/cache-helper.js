@@ -64,9 +64,7 @@ function updateCaptcha(form, result) {
     }
 
     if (form.form && form.form.formTheme) {
-        console.log(form.form.formTheme.savedFormHash)
         form.form.formTheme.updateFormHash();
-        console.log(form.form.formTheme.savedFormHash)
     }
 }
 
