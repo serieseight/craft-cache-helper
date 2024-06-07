@@ -19,7 +19,18 @@ function updateTokens(form) {
     // update tokens using built-in Formie function
     document.addEventListener('onFormieInit', (e) => {
         let Formie = e.detail.formie;
-        Formie.refreshForCache(formConfig.formHashId)
+
+        // Check refreshForCache exists. It was added in 2.0.39
+        if(typeof Formie.refreshForCache !== 'undefined') {
+            Formie.refreshForCache(formConfig.formHashId)
+        } else {
+            fetch(`/actions/formie/forms/refresh-tokens?form=${formConfig.formHandle}`)
+                .then(result => result.json())
+                .then(result => {
+                    updateCSRF(form, result);
+                    updateCaptcha(form, result);
+                });
+        }
     })
     if (formConfig.settings.submitMethod === 'page-reload') {
         // before submission add a query parameter to break the cache of the success message
@@ -28,6 +39,34 @@ function updateTokens(form) {
             if (params.get('form') === null) params.append('form', '')
             history.replaceState({}, '', `?${params.toString().replace(/=$|=(?=&)/g, '')}`)
         })
+    }
+}
+
+function updateCSRF(form, result) {
+    const csrfEl = form.querySelector('input[name="CRAFT_CSRF_TOKEN"]');
+    if (!csrfEl) return;
+    csrfEl.outerHTML = result.csrf.input;
+}
+
+function updateCaptcha(form, result) {
+    // Taken from Formie docs
+    // https://verbb.io/craft-plugins/formie/docs/template-guides/cached-forms
+    if (result.captchas && result.captchas.javascript) {
+        let jsCaptcha = result.captchas.javascript;
+
+        form.querySelector('input[name="' + jsCaptcha.sessionKey + '"]').value = jsCaptcha.value;
+    }
+
+    if (result.captchas && result.captchas.duplicate) {
+        let duplicateCaptcha = result.captchas.duplicate;
+
+        form.querySelector('input[name="' + duplicateCaptcha.sessionKey + '"]').value = duplicateCaptcha.value;
+    }
+
+    if (form.form && form.form.formTheme) {
+        console.log(form.form.formTheme.savedFormHash)
+        form.form.formTheme.updateFormHash();
+        console.log(form.form.formTheme.savedFormHash)
     }
 }
 
@@ -66,23 +105,25 @@ function updateDynamic(form) {
             case 'prePopulate':
             case 'query':
                 const params = new URLSearchParams(location.search);
-              switch(field.name) {
-                case 'checkboxes':
-                  updateCheckboxes(form.parent, field.handle, [params.get(`${field.queryParam}`)]);
-                  updateCheckboxes(form.parent, field.handle, params.getAll(`${field.queryParam}[]`));
-                  break;
 
-                case 'Radio Buttons':
-                  updateRadio(form.parent, field.handle, params.get(field.queryParam));
-                  break;
+                switch(field.name) {
+                    case 'Checkboxes':
+                        updateCheckboxes(form.parent, field.handle, [params.get(`${field.queryParam}`)]);
+                        updateCheckboxes(form.parent, field.handle, params.getAll(`${field.queryParam}[]`));
+                        break;
 
-                case 'Entries':
-                  updateElement(form.parent, field.handle, params.get(field.queryParam));
-                  break;
+                    case 'Radio Buttons':
+                        updateRadio(form.parent, field.handle, params.get(field.queryParam));
+                        break;
 
-                default:
-                  updateField(form.parent, field.handle, params.get(field.queryParam));
-              }
+                    case 'Entries':
+                        updateElement(form.parent, field.handle, params.get(field.queryParam));
+                        break;
+
+                    default:
+                        updateField(form.parent, field.handle, params.get(field.queryParam));
+                }
+
                 break;
         }
     }
@@ -115,9 +156,9 @@ function updateCheckboxes(el, handle, values = []) {
 }
 
 function updateRadio(el, handle, value) {
-  const field = el.querySelector(`[name="fields\[${handle}\]"][value="${value}"]`);
-  if(!field) return;
-  field.checked = true;
+    const field = el.querySelector(`[name="fields\[${handle}\]"][value="${value}"]`);
+    if(!field) return;
+    field.checked = true;
 }
 
 function getCookie(name) {
