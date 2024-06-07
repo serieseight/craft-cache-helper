@@ -86,7 +86,7 @@ function updateDynamic(form) {
 			case 'query':
 				const params = new URLSearchParams(location.search);
 				switch(field.name) {
-					case 'checkboxes':
+					case 'Checkboxes':
 						updateCheckboxes(form.parent, field.handle, [params.get(`${field.queryParam}`)]);
 						updateCheckboxes(form.parent, field.handle, params.getAll(`${field.queryParam}[]`));
 						break;
