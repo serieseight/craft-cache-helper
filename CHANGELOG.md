@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.7 - 2024-06-13
+
+- Check window.Formie is already loaded
+
 ## 1.0.6 - 2024-06-07
 
 - Add check for refreshForCache

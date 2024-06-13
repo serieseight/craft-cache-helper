@@ -17,21 +17,13 @@ function updateTokens(form) {
     const formConfig = JSON.parse(formConfigRaw);
     if (!formConfig || !formConfig.formHandle) return;
     // update tokens using built-in Formie function
-    document.addEventListener('onFormieInit', (e) => {
-        let Formie = e.detail.formie;
-
-        // Check refreshForCache exists. It was added in 2.0.39
-        if(typeof Formie.refreshForCache !== 'undefined') {
-            Formie.refreshForCache(formConfig.formHashId)
-        } else {
-            fetch(`/actions/formie/forms/refresh-tokens?form=${formConfig.formHandle}`)
-                .then(result => result.json())
-                .then(result => {
-                    updateCSRF(form, result);
-                    updateCaptcha(form, result);
-                });
-        }
-    })
+    if(typeof window.Formie !== 'undefined') {
+        refreshTokens(form, formConfig, window.Formie);
+    } else {
+        document.addEventListener('onFormieInit', (e) => {
+            refreshTokens(form, formConfig, e.detail.formie);
+        })
+    }
     if (formConfig.settings.submitMethod === 'page-reload') {
         // before submission add a query parameter to break the cache of the success message
         form.addEventListener('onFormieValidate', e => {
@@ -39,6 +31,20 @@ function updateTokens(form) {
             if (params.get('form') === null) params.append('form', '')
             history.replaceState({}, '', `?${params.toString().replace(/=$|=(?=&)/g, '')}`)
         })
+    }
+}
+
+function refreshTokens(form, formConfig, Formie) {
+    // Check refreshForCache exists. It was added in 2.0.39
+    if(typeof Formie.refreshForCache !== 'undefined') {
+        Formie.refreshForCache(formConfig.formHashId)
+    } else {
+        fetch(`/actions/formie/forms/refresh-tokens?form=${formConfig.formHandle}`)
+            .then(result => result.json())
+            .then(result => {
+                updateCSRF(form, result);
+                updateCaptcha(form, result);
+            });
     }
 }
 
