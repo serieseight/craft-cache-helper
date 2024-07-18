@@ -20,7 +20,7 @@ Open your terminal and run the following commands
 cd /path/to/project
 
 # Tell Composer to load the plugin
-composer require serieseight/craft-cache-helper:v3.x-dev
+composer require serieseight/craft-cache-helper:v3
 
 # Tell Craft to install the plugin
 ./craft plugin/install cache-helper
