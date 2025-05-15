@@ -14,6 +14,10 @@ class CacheHelperBundle extends AssetBundle
             'cache-helper.js',
         ];
 
+		$this->jsOptions = [
+			'defer' => true,
+		];
+
         parent::init();
     }
 }
