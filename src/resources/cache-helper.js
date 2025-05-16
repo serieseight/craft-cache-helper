@@ -1,13 +1,44 @@
 init();
 
 function init() {
-    const formieForms = document.querySelectorAll('.fui-form');
-    for (const form of formieForms) {
-        updateTokens(form);
-    }
+    window.dynamicForms = window.dynamicForms || [];
+    
+    // Attempt to dynamically update any already initialised forms (by Formie)
+    // For example forms that are already in the viewport or forms that don't use useObserver
+    refreshForms();
+    
+    // Listen for new forms as they're initialised (if they are using useObserver for example)
+    document.addEventListener("onFormieInit", e => {
+        const form = e.detail.form;
+        const $form = e.detail.$form;
+        
+        refreshForm(form, $form);
+    });
+    
+    // Try refreshing Formie initialised forms again if Formie loads in later
+    document.addEventListener("onFormieLoaded", e => {
+        refreshForms();
+    });
+}
 
-    for (const form of (window.dynamicForms || [])) {
-        updateDynamic(form);
+function refreshForms() {
+    // Check forms are already initialised otherwise they will be initialised using Formie observer
+    if(window.Formie?.forms?.length) {
+        const forms = window.Formie.forms;
+        
+        forms.forEach(form => {
+            refreshForm(form, form.$form);
+        });
+    }
+}
+
+function refreshForm(form, $form) {
+    const dynamicForm = window.dynamicForms.find(dynamicForm => dynamicForm.formHandle === form.config.formHandle);
+    
+    updateTokens($form);
+    
+    if(dynamicForm) {
+        updateDynamic(dynamicForm);
     }
 }
 
