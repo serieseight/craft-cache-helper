@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.9 - 2025-05-16
+
+- Updated init code to work with Formie's useObserver setting
+
 ## 1.0.7 - 2024-06-13
 
 - Check window.Formie is already loaded
