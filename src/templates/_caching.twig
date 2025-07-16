@@ -6,6 +6,7 @@ rather than relying on twig (which would be cached)
 <script>
 	window.dynamicForms = window.dynamicForms || []
 	window.dynamicForms.push({
+		formHandle: '{{ form.handle }}',
 		parent: document.currentScript.parentElement,
 		fields: [
       {%- for field in form.getCustomFields() -%}
