@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.10 - 2025-08-06
+
+- Changed assetbundle to run on DOMContentLoaded event
+
 ## 1.0.9 - 2025-05-16
 
 - Updated init code to work with Formie's useObserver setting

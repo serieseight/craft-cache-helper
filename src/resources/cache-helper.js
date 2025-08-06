@@ -1,4 +1,6 @@
-init();
+document.addEventListener('DOMContentLoaded', (event) => {
+    init();
+});
 
 function init() {
     window.dynamicForms = window.dynamicForms || [];
