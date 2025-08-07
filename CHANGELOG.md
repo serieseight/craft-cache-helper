@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.11 - 2025-08-07
+
+- Revert 1.0.10 as it needs more testing
+
 ## 1.0.10 - 2025-08-06
 
 - Changed assetbundle to run on DOMContentLoaded event
